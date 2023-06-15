@@ -5,11 +5,13 @@ class TransformacaoLinear:
     def __init__(self, matriz):
         self.matriz = np.array(matriz)
         m, n = self.matriz.shape
-        if m not in [1, 2, 3] or n not in [1, 2, 3]:
+        if m < 1 or m > 3 or n < 1 or n > 3:
             raise ValueError("A matriz deve ter dimensões entre 1x1 e 3x3")
 
     def aplica(self, vetor):
         vetor = np.array(vetor)
+        if len(vetor) != self.matriz.shape[1]:
+            raise ValueError("A dimensão do vetor deve ser igual ao número de colunas da matriz")
         return np.dot(self.matriz, vetor)
 
     def get_matriz(self):
@@ -26,17 +28,19 @@ class TransformacaoLinear:
         return np.linalg.matrix_rank(self.matriz) == m
 
     def get_autovalores(self):
-        if not self.is_sobrejetora():
-            raise ValueError("A matriz não é sobrejetora")
+        m, n = self.matriz.shape
+        if m != n:
+            raise ValueError("A matriz precisa ser quadrada para calcular autovalores")
         return np.linalg.eigvals(self.matriz)
-
 
 # Exemplo de uso:
 
-t = TransformacaoLinear([[1, 2], [3, 4]])
+t = TransformacaoLinear([[ 2 , 1 , 4 ], [3 , 0 , 1]])
 print("Matriz: \n", t.get_matriz())
 print("Dimensão: ", t.get_dimensao())
 print("Kernel: \n", t.get_kernel())
 print("Sobrejetora: ", t.is_sobrejetora())
-if t.is_sobrejetora():
+try:
     print("Autovalores: ", t.get_autovalores())
+except ValueError as e:
+    print(e)
