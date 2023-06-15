@@ -28,27 +28,26 @@ class TransformacaoLinear:
         m, n = self.matriz.shape
         return np.linalg.matrix_rank(self.matriz) == m
 
+    def get_vetores_combinacao(self):
+        return [self.matriz[:,i] for i in range(self.matriz.shape[1])]
+
+    def get_imagem(self):
+        return Matrix(self.matriz).columnspace()
+    
+    def verifica_operador(self):
+        if not self.is_sobrejetora():
+            return False
+        try:
+            autovalores = self.get_autovalores()
+            return np.all(autovalores != 0)
+        except ValueError:
+            return False
+
     def get_autovalores(self):
         m, n = self.matriz.shape
         if m != n:
             raise ValueError("A matriz precisa ser quadrada para calcular autovalores")
         return np.linalg.eigvals(self.matriz)
 
-    def get_vetores_combinacao(self):
-        return [self.matriz[:,i] for i in range(self.matriz.shape[1])]
 
-    def get_imagem(self):
-        return Matrix(self.matriz).columnspace()
-# Exemplo de uso:
 
-t = TransformacaoLinear([[ 1 , 1 ], [0 , 1], [2 , 0]])
-print("Matriz: \n", t.get_matriz())
-print("Dimensão: ", t.get_dimensao())
-print("Kernel: \n", t.get_kernel())
-print("Sobrejetora: ", t.is_sobrejetora())
-print("Vetores da combinação linear: ", t.get_vetores_combinacao())
-print("Imagem: ", t.get_imagem())
-try:
-    print("Autovalores: ", t.get_autovalores())
-except ValueError as e:
-    print(e)
