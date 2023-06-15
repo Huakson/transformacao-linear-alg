@@ -7,7 +7,7 @@ class TransformacaoLinear:
     def __init__(self, transformacao_linar_string):
         matriz = self.parse_transformacao(transformacao_linar_string)
         # explicitamente converter para float
-        self.matriz = np.array(matriz, dtype=float)
+        self.matriz = np.array(matriz, dtype=int)
         m, n = self.matriz.shape
         if m < 1 or m > 3 or n < 1 or n > 3:
             raise ValueError("A matriz deve ter dimensões entre 1x1 e 3x3")
