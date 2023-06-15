@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.linalg import null_space
+from sympy import Matrix
 
 class TransformacaoLinear:
     def __init__(self, matriz):
@@ -36,14 +37,17 @@ class TransformacaoLinear:
     def get_vetores_combinacao(self):
         return [self.matriz[:,i] for i in range(self.matriz.shape[1])]
 
+    def get_imagem(self):
+        return Matrix(self.matriz).columnspace()
 # Exemplo de uso:
 
-t = TransformacaoLinear([[ 2 , 1 , 4 ], [3 , 0 , 1]])
+t = TransformacaoLinear([[ 1 , 1 ], [0 , 1], [2 , 0]])
 print("Matriz: \n", t.get_matriz())
 print("Dimensão: ", t.get_dimensao())
 print("Kernel: \n", t.get_kernel())
 print("Sobrejetora: ", t.is_sobrejetora())
 print("Vetores da combinação linear: ", t.get_vetores_combinacao())
+print("Imagem: ", t.get_imagem())
 try:
     print("Autovalores: ", t.get_autovalores())
 except ValueError as e:
