@@ -47,7 +47,13 @@ class TransformacaoLinear:
             return np.all(autovalores != 0)
         except ValueError:
             return False
-
+    def is_injetora(self):
+        m, n = self.matriz.shape
+        return np.linalg.matrix_rank(self.matriz) == n
+    
+    def is_bijetora(self):
+        return self.is_injetora() and self.is_sobrejetora()
+    
     def get_autovalores(self):
         m, n = self.matriz.shape
         if m != n:
