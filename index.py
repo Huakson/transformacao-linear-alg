@@ -1,6 +1,8 @@
 import Transform as tf
 
-matriz  = tf.TransformacaoLinear([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
+transformacao_linear = "T: R2 -> R2, T(x, y) = (x - y, 2*x + y)"
+
+matriz  = tf.TransformacaoLinear(transformacao_linear)
 
 print("Matriz: \n", matriz.get_matriz())
 print("Dimensão: ", matriz.get_dimensao())
