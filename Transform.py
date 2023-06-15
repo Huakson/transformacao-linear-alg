@@ -33,6 +33,9 @@ class TransformacaoLinear:
             raise ValueError("A matriz precisa ser quadrada para calcular autovalores")
         return np.linalg.eigvals(self.matriz)
 
+    def get_vetores_combinacao(self):
+        return [self.matriz[:,i] for i in range(self.matriz.shape[1])]
+
 # Exemplo de uso:
 
 t = TransformacaoLinear([[ 2 , 1 , 4 ], [3 , 0 , 1]])
@@ -40,6 +43,7 @@ print("Matriz: \n", t.get_matriz())
 print("Dimensão: ", t.get_dimensao())
 print("Kernel: \n", t.get_kernel())
 print("Sobrejetora: ", t.is_sobrejetora())
+print("Vetores da combinação linear: ", t.get_vetores_combinacao())
 try:
     print("Autovalores: ", t.get_autovalores())
 except ValueError as e:
