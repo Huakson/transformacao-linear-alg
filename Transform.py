@@ -27,7 +27,14 @@ class TransformacaoLinear:
         return self.matriz.shape
 
     def get_kernel(self):
-        return null_space(self.matriz)
+        matrix = Matrix(self.matriz.tolist())
+        return matrix.nullspace()
+    
+    def dimension_kernel(self):
+        matrix_rank = np.linalg.matrix_rank(self.matriz)
+        input_dim, output_dim = self.matriz.shape
+        kernel_dimension = input_dim - matrix_rank
+        return kernel_dimension
 
     def is_sobrejetora(self):
         m, n = self.matriz.shape
@@ -39,7 +46,12 @@ class TransformacaoLinear:
     def get_imagem(self):
         return Matrix(self.matriz).columnspace()
     
-    def verifica_operador(self):
+    def dimension_imagem(self):
+        matrix_rank = np.linalg.matrix_rank(self.matriz)
+        output_dim = self.matriz.shape[1]
+        return matrix_rank, output_dim
+    
+    def is_operador(self):
         if not self.is_sobrejetora():
             return False
         try:
@@ -47,6 +59,7 @@ class TransformacaoLinear:
             return np.all(autovalores != 0)
         except ValueError:
             return False
+        
     def is_injetora(self):
         m, n = self.matriz.shape
         return np.linalg.matrix_rank(self.matriz) == n
