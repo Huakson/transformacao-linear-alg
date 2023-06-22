@@ -16,29 +16,31 @@ def show_results():
         # Criando a transformação linear
         transformacao = TransformacaoLinear(transformacao_linear)
 
-        # Extraindo os resultados
-        matriz = transformacao.get_matriz()
-        dimensao = transformacao.get_dimensao()
-        kernel = transformacao.get_kernel()
-        sobrejetora = transformacao.is_sobrejetora()
-        injetora = transformacao.is_injetora()
-        bijetora = transformacao.is_bijetora()
-        vetores_combinacao = transformacao.get_vetores_combinacao()
-        imagem = [list(tup) for tup in transformacao.get_imagem()]  # Convertendo o objeto sympy.Matrix para lista aninhada
-        dimensao_imagem = transformacao.dimension_imagem()
+        if transformacao.isTransformacaoLinear():
+            # Extraindo os resultados
+            matriz = transformacao.get_matriz()
+            dimensao = transformacao.get_dimensao()
+            kernel = transformacao.get_kernel()
+            sobrejetora = transformacao.is_sobrejetora()
+            injetora = transformacao.is_injetora()
+            bijetora = transformacao.is_bijetora()
+            vetores_combinacao = transformacao.get_vetores_combinacao()
+            imagem = [list(tup) for tup in transformacao.get_imagem()]  # Convertendo o objeto sympy.Matrix para lista aninhada
+            dimensao_imagem = transformacao.dimension_imagem()
 
-        # Atualizando os rótulos com os resultados
-        matriz_label.configure(text="Matriz:\n{}".format(format_matrix(matriz)))
-        dimensao_label.configure(text="Dimensão: {}".format(dimensao))
-        kernel_label.configure(text="Kernel:\n{}".format(format_matrix(kernel)))
-        dimensao_kernel_label.configure(text="Dimensão do Kernel:\n{}".format(transformacao.dimension_kernel()))
-        sobrejetora_label.configure(text="Sobrejetora: {}".format(sobrejetora))
-        injetora_label.configure(text="Injetora: {}".format(injetora))
-        bijetora_label.configure(text="Bijetora: {}".format(bijetora))
-        vetores_combinacao_label.configure(text="Vetores da combinação linear:\n{}".format(format_matrix(vetores_combinacao)))
-        imagem_label.configure(text="Imagem:\n{}".format(format_matrix(imagem)))
-        dimensao_imagem_label.configure(text="Dimensão da Imagem: {}".format(dimensao_imagem))
-
+            # Atualizando os rótulos com os resultados
+            matriz_label.configure(text="Matriz:\n{}".format(format_matrix(matriz)))
+            dimensao_label.configure(text="Dimensão: {}".format(dimensao))
+            kernel_label.configure(text="Kernel:\n{}".format(format_matrix(kernel)))
+            dimensao_kernel_label.configure(text="Dimensão do Kernel:\n{}".format(transformacao.dimension_kernel()))
+            sobrejetora_label.configure(text="Sobrejetora: {}".format(sobrejetora))
+            injetora_label.configure(text="Injetora: {}".format(injetora))
+            bijetora_label.configure(text="Bijetora: {}".format(bijetora))
+            vetores_combinacao_label.configure(text="Vetores da combinação linear:\n{}".format(format_matrix(vetores_combinacao)))
+            imagem_label.configure(text="Imagem:\n{}".format(format_matrix(imagem)))
+            dimensao_imagem_label.configure(text="Dimensão da Imagem: {}".format(dimensao_imagem))
+        else:
+             messagebox.showerror("Erro", "Não é transformação linear")
     except Exception as e:
         # Mostrando a mensagem de erro em uma caixa de mensagem
         messagebox.showerror("Erro", str(e))
