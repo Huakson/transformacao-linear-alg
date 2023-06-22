@@ -6,12 +6,24 @@ import re
 class TransformacaoLinear:
     def __init__(self, transformacao_linar_string):
         matriz = self.parse_transformacao(transformacao_linar_string)
+
+        if not self.isTransformacaoLinear(matriz):
+            raise ValueError("A matriz não é uma transformação linear")
+        
         # explicitamente converter para float
         self.matriz = np.array(matriz, dtype=int)
         m, n = self.matriz.shape
         if m < 1 or m > 3 or n < 1 or n > 3:
             raise ValueError("A matriz deve ter dimensões entre 1x1 e 3x3")
 
+    def isTransformacaoLinear(self,matriz):
+        matriz = np.array(matriz, dtype=float)  # Converter para float
+        m, n = matriz.shape
+        if m == n:
+            return np.linalg.matrix_rank(matriz) == m
+        else:
+            return False
+        
     def aplica(self, vetor):
         vetor = np.array(vetor)
         if len(vetor) != self.matriz.shape[1]:

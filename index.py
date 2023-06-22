@@ -1,6 +1,6 @@
 import Transform as tf
 
-transformacao_linear = "T: R3 -> R3, T(x, y, z) = (x, y, z)"
+transformacao_linear = "T: R3 -> R3, T(x, y, z) = (2**x, 3*y, -z)"
 
 matriz  = tf.TransformacaoLinear(transformacao_linear)
 
