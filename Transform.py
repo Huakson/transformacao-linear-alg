@@ -21,7 +21,6 @@ class TransformacaoLinear:
         if m != n:
             return False
 
-    # Verifica a transformação para todos os vetores de entrada possíveis
         for i in range(m):
             for j in range(n):
                 entrada = np.zeros(n)

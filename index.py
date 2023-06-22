@@ -1,6 +1,6 @@
 import Transform as tf
 
-transformacao_linear = "T: R3 -> R2, T(x, y, z) = (x + 1, y + 2)"
+transformacao_linear = "T: R2 -> R2, T(x, y) = (x, 0)"
 
 matriz  = tf.TransformacaoLinear(transformacao_linear)
 print("E Transformação Linear: ", matriz.isTransformacaoLinear())
