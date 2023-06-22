@@ -9,30 +9,46 @@ class TransformacaoLinear:
         matriz = self.parse_transformacao(transformacao_linar_string)
         
         # explicitamente converter para float
-        self.matriz = np.array(matriz, dtype=int)
+        self.matriz = np.array(matriz,  dtype=int)
         m, n = self.matriz.shape
         if m < 1 or m > 3 or n < 1 or n > 3:
             raise ValueError("A matriz deve ter dimensões entre 1x1 e 3x3")
 
+
+    
     def isTransformacaoLinear(self):
-        matriz = np.array(self.matriz)
+        matriz = np.array(self.matriz, dtype=int)
         m, n = matriz.shape
 
+        # Verificar se a matriz é quadrada
         if m != n:
             return False
-
+    
+        # Verificar a preservação da soma
         for i in range(m):
             for j in range(n):
-                entrada = np.zeros(n)
-                entrada[j] = 1
-                saida_esperada = matriz[:, j]
-                saida_calculada = np.dot(matriz, entrada)
+                u = np.zeros(n)
+                v = np.zeros(n)
+                u[i] = 1
+                v[j] = 1
+                soma_esperada = matriz[:, i] + matriz[:, j]
+                soma_calculada = np.dot(matriz, u + v)
+                if not np.allclose(soma_calculada, soma_esperada):
+                    return False
 
-                if not np.array_equal(saida_calculada, saida_esperada):
+        # Verificar a preservação da multiplicação por escalar
+        for i in range(m):
+            for c in range(5):  # Verificar até 5 escalares
+                u = np.zeros(n)
+                u[i] = 1
+                escalar = c + 1
+                mult_esperada = matriz[:, i] * escalar
+                mult_calculada = np.dot(matriz, escalar * u)
+                if not np.allclose(mult_calculada, mult_esperada):
                     return False
 
         return True
-        
+           
     def aplica(self, vetor):
         vetor = np.array(vetor)
         if len(vetor) != self.matriz.shape[1]:
