@@ -1,9 +1,9 @@
 import Transform as tf
 
-transformacao_linear = "T: R3 -> R3, T(x, y, z) = (2**x, 3*y, -z)"
+transformacao_linear = "T: R2 -> R2, T(x, y) = (2*x - y, x + 3*y)"
 
 matriz  = tf.TransformacaoLinear(transformacao_linear)
-
+print("E Transformação Linear: ", matriz.isTransformacaoLinear())
 print("Matriz: \n", matriz.get_matriz())
 print("Dimensão: ", matriz.get_dimensao())
 print("Kernel: \n", matriz.get_kernel())

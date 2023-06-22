@@ -4,11 +4,9 @@ from sympy import Matrix, symbols, parse_expr, simplify
 import re
 
 class TransformacaoLinear:
+    matriz = []
     def __init__(self, transformacao_linar_string):
         matriz = self.parse_transformacao(transformacao_linar_string)
-
-        if not self.isTransformacaoLinear(matriz):
-            raise ValueError("A matriz não é uma transformação linear")
         
         # explicitamente converter para float
         self.matriz = np.array(matriz, dtype=int)
@@ -16,13 +14,16 @@ class TransformacaoLinear:
         if m < 1 or m > 3 or n < 1 or n > 3:
             raise ValueError("A matriz deve ter dimensões entre 1x1 e 3x3")
 
-    def isTransformacaoLinear(self,matriz):
-        matriz = np.array(matriz, dtype=float)  # Converter para float
+    def isTransformacaoLinear(self):
+        matriz = np.array(self.matriz)
         m, n = matriz.shape
-        if m == n:
-            return np.linalg.matrix_rank(matriz) == m
-        else:
-            return False
+
+        for i in range(m):
+            for j in range(n):
+                if j != i and matriz[i, j] != 0:
+                    return False
+
+        return True
         
     def aplica(self, vetor):
         vetor = np.array(vetor)
