@@ -18,9 +18,18 @@ class TransformacaoLinear:
         matriz = np.array(self.matriz)
         m, n = matriz.shape
 
+        if m != n:
+            return False
+
+    # Verifica a transformação para todos os vetores de entrada possíveis
         for i in range(m):
             for j in range(n):
-                if j != i and matriz[i, j] != 0:
+                entrada = np.zeros(n)
+                entrada[j] = 1
+                saida_esperada = matriz[:, j]
+                saida_calculada = np.dot(matriz, entrada)
+
+                if not np.array_equal(saida_calculada, saida_esperada):
                     return False
 
         return True
